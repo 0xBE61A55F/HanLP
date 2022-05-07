@@ -139,12 +139,12 @@ def download(url, save_path=None, save_dir=hanlp_home(), prefix=HANLP_URL, appen
         save_path = path_from_url(url, save_dir, prefix, append_location)
     if os.path.isfile(save_path):
         if verbose:
-            eprint('Using local {}, ignore {}'.format(save_path, url))
+            cprint(f'Using local [yellow]{save_path}[/yellow], ignore [blue][underline]{url}[/underline][/blue]')
         return save_path
     else:
         makedirs(parent_dir(save_path))
         if verbose:
-            eprint('Downloading {} to {}'.format(url, save_path))
+            cprint(f'Downloading [blue][underline]{url}[/underline][/blue] to [yellow]{save_path}[/yellow]')
         tmp_path = '{}.downloading'.format(save_path)
         remove_file(tmp_path)
         try:
@@ -164,7 +164,7 @@ def download(url, save_path=None, save_dir=hanlp_home(), prefix=HANLP_URL, appen
                 # Always prompt user to upgrade whenever a new version is available
                 hints = f'[green]Please upgrade to the latest version ({latest_version}) with:[/green]' \
                         f'\n\n\t[yellow]pip install -U hanlp[/yellow]\n'
-            else:  # Otherwise prompt user to re-try
+            else:  # Otherwise, prompt user to re-try
                 hints = f'[green]Please re-try or download it to {save_path} by yourself '
                 if not windows():
                     hints += f'with:[/green]\n\n\t[yellow]wget {url} -O {save_path}[/yellow]\n\n'
